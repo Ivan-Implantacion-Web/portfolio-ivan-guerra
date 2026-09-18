@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Iván — Consultor IT · Ciberseguridad</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Iván Guerra Pérez — Consultor IT · Ciberseguridad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#1B1712;
@@ -30,14 +31,28 @@
   }
   a{color:inherit;}
   ::selection{background:var(--brass);color:#1B1613;}
-  .wrap{max-width:860px;margin:0 auto;padding:0 32px;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px;}
 
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(20,17,15,0.92);border-bottom:1px solid var(--line);}
-  .nav-inner{max-width:860px;margin:0 auto;padding:22px 32px;display:flex;justify-content:space-between;align-items:center;}
-  .file-no{font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--brass);}
+  /* NAV */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(20,17,15,0.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:920px;margin:0 auto;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .file-no{font-size:12px;letter-spacing:.08em;color:var(--brass);}
   nav ul{list-style:none;display:flex;gap:30px;margin:0;padding:0;}
-  nav a{font-size:13.5px;color:var(--text-muted);text-decoration:none;}
+  nav a{font-size:13.5px;color:var(--text-muted);text-decoration:none;position:relative;padding-bottom:4px;transition:color .15s;}
+  nav a::after{content:"";position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--brass);transition:width .2s;}
   nav a:hover{color:var(--text);}
+  nav a.active{color:var(--text);}
+  nav a.active::after{width:100%;}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--text);width:38px;height:38px;border-radius:4px;font-size:16px;cursor:pointer;}
+  #navlist{transition:max-height .25s ease;}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease, transform .55s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
 
   .stamp{
     display:inline-block;border:1px solid var(--brass-dim);color:var(--brass);
@@ -49,93 +64,108 @@
   .hero .stamp{margin-bottom:26px;}
   h1.name{
     font-family:var(--serif);font-weight:600;font-style:italic;
-    font-size:clamp(46px,7vw,76px);line-height:1;margin:0 0 20px;color:#fff;
+    font-size:clamp(42px,6.4vw,70px);line-height:1.03;margin:0 0 20px;color:#fff;
   }
-  .role{font-size:19px;color:var(--text-muted);max-width:52ch;margin:0 0 30px;}
+  .role{font-size:18px;color:var(--text-muted);max-width:56ch;margin:0 0 30px;}
   .role b{color:var(--text);font-weight:500;font-style:normal;}
   .divider{height:1px;background:var(--line);margin:30px 0;}
   .meta-line{display:flex;gap:36px;flex-wrap:wrap;font-size:13.5px;color:var(--text-faint);margin-bottom:36px;}
-  .meta-line dt{display:inline;color:var(--text-muted);}
   .meta-line .item{display:flex;flex-direction:column;gap:3px;}
   .meta-line .item b{color:var(--text);font-weight:500;font-size:14.5px;}
 
-  .cta-row{display:flex;gap:16px;}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;}
   .btn{font-size:14px;padding:12px 24px;text-decoration:none;border-radius:var(--radius);display:inline-block;transition:all .15s;}
   .btn.primary{background:var(--brass);color:#1B1613;font-weight:600;}
-  .btn.primary:hover{background:#cf9f5e;}
+  .btn.primary:hover{background:#dcae6c;transform:translateY(-1px);}
   .btn.ghost{border:1px solid var(--line);color:var(--text);}
   .btn.ghost:hover{border-color:var(--brass-dim);}
 
-  section{padding:76px 0;border-bottom:1px solid var(--line);}
+  section{padding:80px 0;border-bottom:1px solid var(--line);}
   .tab{
     display:inline-flex;align-items:center;gap:10px;
     font-size:12.5px;color:var(--brass);margin-bottom:8px;
   }
   .tab::before{content:"§";font-family:var(--serif);font-style:italic;font-size:16px;}
-  h2{font-family:var(--serif);font-size:30px;font-weight:600;margin:4px 0 40px;color:#fff;}
-  .lede{color:var(--text-muted);max-width:60ch;margin:-24px 0 40px;font-size:15px;}
+  h2{font-family:var(--serif);font-size:29px;font-weight:600;margin:4px 0 16px;color:#fff;}
+  .lede{color:var(--text-muted);max-width:62ch;margin:0 0 40px;font-size:15px;}
+
+  /* SOBRE MI */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .about-grid p{color:var(--text-muted);font-size:15px;margin:0 0 16px;max-width:52ch;}
+  .about-facts{display:flex;flex-direction:column;gap:16px;}
+  .fact-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;}
+  .fact-box b{display:block;font-size:14.5px;color:#fff;margin-bottom:3px;}
+  .fact-box span{font-size:13px;color:var(--text-faint);}
 
   /* SKILLS as clearly separated boxed cards */
-  .ledger{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
-  }
+  .ledger{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
   .ledger-row{
     background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
     padding:24px 26px;box-shadow:0 1px 0 rgba(0,0,0,.2);
   }
-  .ledger-row dt{
-    font-size:12px;color:var(--brass);letter-spacing:.04em;margin-bottom:14px;
-    font-weight:600;
-  }
+  .ledger-row dt{font-size:12px;color:var(--brass);letter-spacing:.04em;margin-bottom:6px;font-weight:600;}
+  .ledger-row .cat-desc{font-size:13px;color:var(--text-faint);margin-bottom:14px;}
   .ledger-row dd{margin:0;display:flex;flex-wrap:wrap;gap:9px;}
-  .tagitem{
-    font-size:13.5px;color:var(--text);background:var(--panel-2);
-    border:1px solid var(--line);border-radius:4px;padding:6px 12px;
-  }
+  .tagitem{font-size:13.5px;color:var(--text);background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:6px 12px;}
 
-  /* EXPERIENCE as boxed case cards */
+  /* EXPERIENCE as boxed case cards with bullet detail */
   .case{
     background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    padding:26px 28px;margin-bottom:16px;box-shadow:0 1px 0 rgba(0,0,0,.2);
+    padding:28px 30px;margin-bottom:18px;box-shadow:0 1px 0 rgba(0,0,0,.2);
+    transition:border-color .15s;
   }
+  .case:hover{border-color:var(--brass-dim);}
   .case:last-child{margin-bottom:0;}
   .case-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:8px;}
   .case-title{font-family:var(--serif);font-size:20px;color:#fff;font-weight:600;}
-  .case-date{
-    font-size:12px;color:var(--brass);white-space:nowrap;padding:4px 10px;
-    background:var(--panel-2);border-radius:4px;height:fit-content;
-  }
-  .case-org{color:var(--text-muted);font-size:14.5px;margin-bottom:10px;font-style:italic;}
-  .case-desc{color:var(--text-muted);font-size:14.5px;max-width:64ch;}
+  .case-date{font-size:12px;color:var(--brass);white-space:nowrap;padding:4px 10px;background:var(--panel-2);border-radius:4px;height:fit-content;}
+  .case-org{color:var(--text-muted);font-size:14.5px;margin-bottom:14px;font-style:italic;}
+  .case-list{margin:0;padding-left:18px;color:var(--text-muted);font-size:14px;}
+  .case-list li{margin-bottom:6px;}
+  .case-list li:last-child{margin-bottom:0;}
 
   /* PROJECTS as boxed dossier cards */
   .entry{
     background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
     padding:28px 30px;margin-bottom:18px;display:grid;grid-template-columns:110px 1fr;gap:26px;
-    box-shadow:0 1px 0 rgba(0,0,0,.2);
+    box-shadow:0 1px 0 rgba(0,0,0,.2);transition:border-color .15s;
   }
+  .entry:hover{border-color:var(--brass-dim);}
   .entry:last-child{margin-bottom:0;}
-  .entry-code{
-    font-size:11px;color:var(--brass);letter-spacing:.04em;padding-top:4px;
-    border-right:1px solid var(--line);
-  }
+  .entry-code{font-size:11px;color:var(--brass);letter-spacing:.04em;padding-top:4px;border-right:1px solid var(--line);}
   .entry-title{font-family:var(--serif);font-size:19px;color:#fff;font-weight:600;margin:0 0 10px;}
-  .entry-body{color:var(--text-muted);font-size:14.5px;max-width:60ch;margin:0 0 14px;}
+  .entry-list{margin:0 0 14px;padding-left:18px;color:var(--text-muted);font-size:14px;max-width:62ch;}
+  .entry-list li{margin-bottom:5px;}
   .entry-tags{display:flex;gap:8px;flex-wrap:wrap;}
-  .entry-tags span{
-    font-size:12px;color:var(--brass);background:var(--panel-2);
-    border:1px solid var(--line);padding:4px 10px;border-radius:4px;
-  }
+  .entry-tags span{font-size:12px;color:var(--brass);background:var(--panel-2);border:1px solid var(--line);padding:4px 10px;border-radius:4px;}
+
+  /* IDIOMAS Y HABILIDADES */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .lang-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px;}
+  .lang-row:last-child{border-bottom:none;}
+  .lang-level{font-size:12px;color:var(--brass);background:var(--panel-2);border:1px solid var(--line);padding:3px 9px;border-radius:4px;}
+  .skillcaps{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;}
 
   footer{padding:70px 0 80px;text-align:center;}
   .foot-title{font-family:var(--serif);font-style:italic;font-size:32px;color:#fff;margin:0 0 14px;}
   footer p{color:var(--text-muted);max-width:44ch;margin:0 auto 28px;}
   .foot-mail{color:var(--brass);font-size:16px;text-decoration:none;border-bottom:1px solid var(--brass-dim);padding-bottom:2px;}
+  .foot-sub{margin-top:22px;font-size:12.5px;color:var(--text-faint);}
 
+  @media (max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+    .split{grid-template-columns:1fr;}
+  }
   @media (max-width:640px){
     .ledger{grid-template-columns:1fr;}
     .entry{grid-template-columns:1fr;}
     .entry-code{border-right:none;border-bottom:1px solid var(--line);padding-bottom:10px;}
+    .menu-btn{display:block;}
+    #navlist{position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);
+      flex-direction:column;padding:8px 32px 20px;max-height:0;overflow:hidden;gap:0;}
+    #navlist.open{max-height:280px;padding-top:14px;}
+    #navlist li{padding:10px 0;border-bottom:1px solid var(--line);}
+    #navlist li:last-child{border-bottom:none;}
   }
 </style>
 </head>
@@ -143,25 +173,27 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <div class="file-no">EXPEDIENTE · IVÁN</div>
-    <nav><ul>
-      <li><a href="#areas">Áreas</a></li>
-      <li><a href="#trayectoria">Trayectoria</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+    <div class="file-no">EXPEDIENTE · IVÁN GUERRA</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+    <nav><ul id="navlist">
+      <li><a href="#sobre-mi" data-nav>Sobre mí</a></li>
+      <li><a href="#areas" data-nav>Áreas</a></li>
+      <li><a href="#trayectoria" data-nav>Trayectoria</a></li>
+      <li><a href="#casos" data-nav>Casos</a></li>
+      <li><a href="#contacto" data-nav>Contacto</a></li>
     </ul></nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
-    <span class="stamp">EN FORMACIÓN ACTIVA</span>
-    <h1 class="name">Iván</h1>
-    <p class="role">Consultor IT junior especializado en <b>ciberseguridad, bastionado de sistemas y cumplimiento normativo</b>. Formación de máster en curso, con base sólida en administración de sistemas.</p>
+    <span class="stamp">CONSULTOR IT JUNIOR</span>
+    <h1 class="name">Iván Guerra Pérez</h1>
+    <p class="role">Consultor IT junior especializado en <b>ciberseguridad, bastionado de sistemas y cumplimiento normativo</b>. Experiencia en Unisys S.L. monitorizando entornos TI corporativos y especialización en ciberseguridad por la UFV.</p>
     <div class="divider"></div>
     <div class="meta-line">
       <div class="item"><span>Ubicación</span><b>Madrid, España</b></div>
-      <div class="item"><span>Formación actual</span><b>Máster en Ciberseguridad, UFV</b></div>
+      <div class="item"><span>Especialización</span><b>Ciberseguridad, UFV (2025–2026)</b></div>
       <div class="item"><span>Base técnica</span><b>Grado Superior en ASIR</b></div>
     </div>
     <div class="cta-row">
@@ -171,13 +203,33 @@
   </div>
 </section>
 
-<section id="areas">
+<section id="sobre-mi" class="reveal">
+  <div class="wrap">
+    <div class="tab">EXPEDIENTE PERSONAL</div>
+    <h2>Sobre mí</h2>
+    <div class="about-grid">
+      <div>
+        <p>Empecé por la administración de sistemas — redes, servidores, virtualización — y desde ahí me fui acercando a la ciberseguridad como una extensión natural: no basta con que un sistema funcione, tiene que resistir. Ese es el hilo que conecta mi paso por Unisys, monitorizando entornos TI corporativos, con la especialización que curso ahora en la UFV.</p>
+        <p>Me interesa tanto el lado normativo (ENS, RGPD, ISO 27001) como el técnico y ofensivo (hacking ético, respuesta a incidentes, forense digital). En paralelo, monto mis propios laboratorios para aprender haciendo — el más reciente, una infraestructura local de IA aplicada a ciberseguridad.</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact-box"><b>Idiomas</b><span>Español (nativo) · Inglés B2</span></div>
+        <div class="fact-box"><b>Reconocimiento</b><span>Ganador Ideatón Desafiante — 42 Madrid / Fundación Telefónica</span></div>
+        <div class="fact-box"><b>Disponibilidad</b><span>Abierto a prácticas y colaboraciones en Madrid</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="areas" class="reveal">
   <div class="wrap">
     <div class="tab">ÁREAS DE COMPETENCIA</div>
     <h2>Materias del expediente</h2>
+    <p class="lede">Formación combinada en administración de sistemas y ciberseguridad ofensiva/defensiva, con herramientas usadas en entorno real de empresa.</p>
     <div class="ledger">
       <div class="ledger-row">
-        <dt>Cumplimiento</dt>
+        <dt>Cumplimiento y normativa</dt>
+        <div class="cat-desc">Marco legal y de gestión que sostiene cualquier estrategia de seguridad.</div>
         <dd>
           <span class="tagitem">ENS (RD 311/2022)</span>
           <span class="tagitem">RGPD</span>
@@ -186,7 +238,8 @@
         </dd>
       </div>
       <div class="ledger-row">
-        <dt>Ofensiva / Forense</dt>
+        <dt>Ofensiva y forense</dt>
+        <div class="cat-desc">Pensar como atacante para poder defender mejor.</div>
         <dd>
           <span class="tagitem">Ethical Hacking</span>
           <span class="tagitem">Escalado de privilegios (CTF)</span>
@@ -196,16 +249,20 @@
       </div>
       <div class="ledger-row">
         <dt>Infraestructura</dt>
+        <div class="cat-desc">Sistemas y redes bastionados, no solo desplegados.</div>
         <dd>
-          <span class="tagitem">Bastionado Linux</span>
+          <span class="tagitem">Bastionado Linux/Windows</span>
           <span class="tagitem">WireGuard</span>
           <span class="tagitem">Docker</span>
           <span class="tagitem">Fail2ban / nginx</span>
+          <span class="tagitem">Cisco</span>
         </dd>
       </div>
       <div class="ledger-row">
-        <dt>IA aplicada</dt>
+        <dt>Monitorización y herramientas</dt>
+        <div class="cat-desc">Experiencia de uso profesional en entorno corporativo.</div>
         <dd>
+          <span class="tagitem">Nexthink (DEX / NQL)</span>
           <span class="tagitem">Ollama</span>
           <span class="tagitem">AnythingLLM</span>
           <span class="tagitem">RAG sobre MITRE ATT&amp;CK / NIST / OWASP</span>
@@ -215,75 +272,205 @@
   </div>
 </section>
 
-<section id="trayectoria">
+<section id="trayectoria" class="reveal">
   <div class="wrap">
     <div class="tab">HISTORIAL</div>
     <h2>Trayectoria</h2>
     <div class="case">
       <div class="case-head">
-        <div class="case-title">Especialización en Ciberseguridad (Máster)</div>
-        <div class="case-date">Oct. 2025 — actual</div>
+        <div class="case-title">Curso de Especialización en Ciberseguridad</div>
+        <div class="case-date">Oct. 2025 — Jul. 2026</div>
       </div>
       <div class="case-org">Universidad Francisco de Vitoria, Madrid</div>
-      <div class="case-desc">Bastionado de redes y sistemas, incidentes de seguridad, hacking ético y marco ENS/RGPD/ISO 27001.</div>
+      <ul class="case-list">
+        <li>Normativa y cumplimiento en ciberseguridad (ENS, RGPD, ISO 27001).</li>
+        <li>Bastionado y hardening de redes y sistemas (Windows y Linux).</li>
+        <li>Hacking ético: reconocimiento, explotación de vulnerabilidades y pruebas de penetración.</li>
+        <li>Análisis y gestión de incidentes de seguridad: detección, respuesta y recuperación.</li>
+        <li>Puesta en producción segura: integración de seguridad en el ciclo de vida del software (DevSecOps).</li>
+        <li>Análisis forense digital: recolección, preservación y análisis de evidencias.</li>
+      </ul>
+    </div>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-title">Consultor IT Junior</div>
+        <div class="case-date">Sep. 2024 — Jun. 2025</div>
+      </div>
+      <div class="case-org">Unisys S.L., Madrid</div>
+      <ul class="case-list">
+        <li>Monitorización y administración de entorno TI mediante Nexthink.</li>
+        <li>Participación activa en dos proyectos corporativos de mejora de experiencia digital y optimización de rendimiento.</li>
+        <li>Apoyo en el despliegue e instalación de software en entornos corporativos.</li>
+        <li>Creación y mantenimiento de dashboards de experiencia digital y uso de recursos.</li>
+        <li>Análisis de rendimiento de endpoints y elaboración de informes técnicos con propuestas de mejora.</li>
+        <li>Obtención de todas las certificaciones oficiales de Nexthink.</li>
+      </ul>
     </div>
     <div class="case">
       <div class="case-head">
         <div class="case-title">Grado Superior en ASIR</div>
-        <div class="case-date">Titulado</div>
+        <div class="case-date">Nov. 2022 — Nov. 2024</div>
       </div>
       <div class="case-org">Universidad Francisco de Vitoria</div>
-      <div class="case-desc">Administración de Sistemas Informáticos en Red.</div>
+      <ul class="case-list">
+        <li>Administración y mantenimiento de sistemas Windows y Linux.</li>
+        <li>Configuración de redes locales y dispositivos Cisco.</li>
+        <li>Gestión de bases de datos y herramientas de consulta y mantenimiento.</li>
+        <li>Creación de sitios web y administración de servidores web.</li>
+        <li>Aplicación de medidas de seguridad y copias de respaldo en sistemas y redes.</li>
+        <li>Virtualización de sistemas y gestión de máquinas virtuales (VMware, VirtualBox).</li>
+      </ul>
     </div>
     <div class="case">
       <div class="case-head">
-        <div class="case-title">Puesto técnico</div>
-        <div class="case-date">Experiencia previa</div>
+        <div class="case-title">Ganador — Ideatón Desafiante</div>
+        <div class="case-date">Ene. 2024</div>
       </div>
-      <div class="case-org">Unisys S.L.</div>
-      <div class="case-desc">Soporte y operaciones en entorno corporativo.</div>
+      <div class="case-org">Challenge UFV Madrid – CETYS (42 Madrid / Fundación Telefónica)</div>
+      <ul class="case-list">
+        <li>Proyecto ganador del reto orientado al entorno web, entre equipos de distintas universidades.</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section id="casos">
+<section id="casos" class="reveal">
   <div class="wrap">
     <div class="tab">CASOS DE ESTUDIO</div>
     <h2>Trabajo documentado</h2>
+    <p class="lede">Proyectos técnicos propios, al margen del trabajo académico, documentados como lo haría en un entorno profesional.</p>
     <div class="entry">
       <div class="entry-code">CASO<br>N.º 01</div>
       <div>
         <div class="entry-title">Laboratorio local de IA para ciberseguridad</div>
-        <p class="entry-body">Infraestructura propia sobre Ubuntu Server con Ollama y AnythingLLM en Docker, alimentada con RAG de MITRE ATT&CK, NIST CSF y OWASP Top 10. Acceso remoto vía Tailscale, proxy nginx con HTTPS.</p>
-        <div class="entry-tags"><span>Ollama</span><span>Docker</span><span>Tailscale</span></div>
+        <ul class="entry-list">
+          <li>Infraestructura propia sobre Ubuntu Server con Ollama y AnythingLLM desplegados en Docker.</li>
+          <li>Bases RAG construidas sobre MITRE ATT&CK, NIST CSF y OWASP Top 10 para consultas contextualizadas.</li>
+          <li>Acceso remoto seguro vía Tailscale y proxy inverso nginx con HTTPS.</li>
+          <li>Bastionado del host: UFW, Fail2ban y hardening de acceso SSH por clave.</li>
+          <li>Google Gemini 2.0 Flash como agente de respaldo ante caída del modelo local.</li>
+        </ul>
+        <div class="entry-tags"><span>Ollama</span><span>Docker</span><span>Tailscale</span><span>nginx</span></div>
       </div>
     </div>
     <div class="entry">
       <div class="entry-code">CASO<br>N.º 02</div>
       <div>
         <div class="entry-title">Informe de respuesta a incidentes</div>
-        <p class="entry-body">Documentación completa de un escenario de fuerza bruta SSH (INC-2024-0047), estructurada en nueve secciones con referencias ENS y CCN-STIC-817.</p>
-        <div class="entry-tags"><span>ENS</span><span>DFIR</span></div>
+        <ul class="entry-list">
+          <li>Documentación profesional completa de un escenario de fuerza bruta SSH (INC-2024-0047).</li>
+          <li>Nueve secciones obligatorias siguiendo estructura formal de informe DFIR.</li>
+          <li>Referencias normativas al ENS y a la guía CCN-STIC-817.</li>
+        </ul>
+        <div class="entry-tags"><span>ENS</span><span>DFIR</span><span>CCN-STIC-817</span></div>
       </div>
     </div>
     <div class="entry">
       <div class="entry-code">CASO<br>N.º 03</div>
       <div>
         <div class="entry-title">Despliegue de VPN con WireGuard</div>
-        <p class="entry-body">Servidor WireGuard sobre VPS Ubuntu (IONOS) y cliente Windows en modo túnel completo, documentado como informe técnico profesional.</p>
-        <div class="entry-tags"><span>WireGuard</span><span>IONOS</span></div>
+        <ul class="entry-list">
+          <li>Servidor WireGuard sobre VPS Ubuntu (IONOS) y cliente Windows en modo túnel completo.</li>
+          <li>Documentado como informe técnico profesional en español, listo para entrevista.</li>
+        </ul>
+        <div class="entry-tags"><span>WireGuard</span><span>IONOS</span><span>Ubuntu</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-code">CASO<br>N.º 04</div>
+      <div>
+        <div class="entry-title">CTF — Escalado de privilegios en Linux</div>
+        <ul class="entry-list">
+          <li>Explotación de una vulnerabilidad de Bash Array Subscript Injection en un script con bit SUID.</li>
+          <li>Obtención de shell root y descubrimiento independiente de una vía de explotación alternativa más limpia.</li>
+        </ul>
+        <div class="entry-tags"><span>PrivEsc</span><span>Bash</span><span>Linux</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<footer id="contacto">
+<section id="idiomas" class="reveal">
+  <div class="wrap">
+    <div class="tab">IDIOMAS Y HABILIDADES</div>
+    <h2>Complementarios</h2>
+    <div class="split">
+      <div class="ledger-row">
+        <dt>Idiomas</dt>
+        <div class="lang-row"><span>Español</span><span class="lang-level">Nativo</span></div>
+        <div class="lang-row"><span>Inglés — comprensión auditiva</span><span class="lang-level">B2</span></div>
+        <div class="lang-row"><span>Inglés — comprensión lectora</span><span class="lang-level">B2</span></div>
+        <div class="lang-row"><span>Inglés — interacción oral</span><span class="lang-level">B1</span></div>
+      </div>
+      <div class="ledger-row">
+        <dt>Capacidades</dt>
+        <div class="cat-desc">Rasgos que se repiten en cómo trabajo.</div>
+        <div class="skillcaps">
+          <span class="tagitem">Iniciativa</span>
+          <span class="tagitem">Resolución de problemas</span>
+          <span class="tagitem">Capacidad de análisis</span>
+          <span class="tagitem">Planificación estratégica</span>
+          <span class="tagitem">Autonomía y proactividad</span>
+          <span class="tagitem">Pensamiento crítico</span>
+          <span class="tagitem">Trabajo en equipo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto" class="reveal">
   <div class="wrap">
     <div class="foot-title">Cierre de expediente</div>
     <p>Abierto a prácticas y colaboraciones en consultoría IT y ciberseguridad.</p>
-    <a class="foot-mail" href="mailto:tuemail@dominio.com">tuemail@dominio.com</a>
+    <a class="foot-mail" href="mailto:ivan.guerraperez@hotmail.com">ivan.guerraperez@hotmail.com</a>
+    <div class="foot-sub">Madrid, España</div>
   </div>
 </footer>
+
+<script>
+  // Mobile menu toggle
+  var menuBtn = document.getElementById('menuBtn');
+  var navlist = document.getElementById('navlist');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function(){
+      navlist.classList.toggle('open');
+    });
+    navlist.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ navlist.classList.remove('open'); });
+    });
+  }
+
+  // Active nav link on scroll
+  var sections = document.querySelectorAll('section[id], footer[id]');
+  var navLinks = document.querySelectorAll('#navlist a');
+  if ('IntersectionObserver' in window) {
+    var navObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navLinks.forEach(function(link){
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sections.forEach(function(s){ navObserver.observe(s); });
+
+    // Reveal on scroll
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+</script>
 
 </body>
 </html>
