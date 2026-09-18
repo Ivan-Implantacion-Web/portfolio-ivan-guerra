@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iván — Consultor IT · Ciberseguridad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1712;
+    --panel:#251F19;
+    --panel-2:#2C2419;
+    --line:#3A3025;
+    --brass:#C89A5C;
+    --brass-dim:#8A6B41;
+    --text:#F3EEE4;
+    --text-muted:#A79A87;
+    --text-faint:#7A6E5D;
+    --radius:6px;
+    --serif:'Fraunces', serif;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--brass);color:#1B1613;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 32px;}
+
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(20,17,15,0.92);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:860px;margin:0 auto;padding:22px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .file-no{font-family:var(--sans);font-size:12px;letter-spacing:.08em;color:var(--brass);}
+  nav ul{list-style:none;display:flex;gap:30px;margin:0;padding:0;}
+  nav a{font-size:13.5px;color:var(--text-muted);text-decoration:none;}
+  nav a:hover{color:var(--text);}
+
+  .stamp{
+    display:inline-block;border:1px solid var(--brass-dim);color:var(--brass);
+    font-size:11px;letter-spacing:.12em;padding:4px 10px;transform:rotate(-2deg);
+    border-radius:var(--radius);
+  }
+
+  .hero{padding:110px 0 80px;border-bottom:1px solid var(--line);}
+  .hero .stamp{margin-bottom:26px;}
+  h1.name{
+    font-family:var(--serif);font-weight:600;font-style:italic;
+    font-size:clamp(46px,7vw,76px);line-height:1;margin:0 0 20px;color:#fff;
+  }
+  .role{font-size:19px;color:var(--text-muted);max-width:52ch;margin:0 0 30px;}
+  .role b{color:var(--text);font-weight:500;font-style:normal;}
+  .divider{height:1px;background:var(--line);margin:30px 0;}
+  .meta-line{display:flex;gap:36px;flex-wrap:wrap;font-size:13.5px;color:var(--text-faint);margin-bottom:36px;}
+  .meta-line dt{display:inline;color:var(--text-muted);}
+  .meta-line .item{display:flex;flex-direction:column;gap:3px;}
+  .meta-line .item b{color:var(--text);font-weight:500;font-size:14.5px;}
+
+  .cta-row{display:flex;gap:16px;}
+  .btn{font-size:14px;padding:12px 24px;text-decoration:none;border-radius:var(--radius);display:inline-block;transition:all .15s;}
+  .btn.primary{background:var(--brass);color:#1B1613;font-weight:600;}
+  .btn.primary:hover{background:#cf9f5e;}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);}
+  .btn.ghost:hover{border-color:var(--brass-dim);}
+
+  section{padding:76px 0;border-bottom:1px solid var(--line);}
+  .tab{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12.5px;color:var(--brass);margin-bottom:8px;
+  }
+  .tab::before{content:"§";font-family:var(--serif);font-style:italic;font-size:16px;}
+  h2{font-family:var(--serif);font-size:30px;font-weight:600;margin:4px 0 40px;color:#fff;}
+  .lede{color:var(--text-muted);max-width:60ch;margin:-24px 0 40px;font-size:15px;}
+
+  /* SKILLS as clearly separated boxed cards */
+  .ledger{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
+  }
+  .ledger-row{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 26px;box-shadow:0 1px 0 rgba(0,0,0,.2);
+  }
+  .ledger-row dt{
+    font-size:12px;color:var(--brass);letter-spacing:.04em;margin-bottom:14px;
+    font-weight:600;
+  }
+  .ledger-row dd{margin:0;display:flex;flex-wrap:wrap;gap:9px;}
+  .tagitem{
+    font-size:13.5px;color:var(--text);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:4px;padding:6px 12px;
+  }
+
+  /* EXPERIENCE as boxed case cards */
+  .case{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 28px;margin-bottom:16px;box-shadow:0 1px 0 rgba(0,0,0,.2);
+  }
+  .case:last-child{margin-bottom:0;}
+  .case-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:8px;}
+  .case-title{font-family:var(--serif);font-size:20px;color:#fff;font-weight:600;}
+  .case-date{
+    font-size:12px;color:var(--brass);white-space:nowrap;padding:4px 10px;
+    background:var(--panel-2);border-radius:4px;height:fit-content;
+  }
+  .case-org{color:var(--text-muted);font-size:14.5px;margin-bottom:10px;font-style:italic;}
+  .case-desc{color:var(--text-muted);font-size:14.5px;max-width:64ch;}
+
+  /* PROJECTS as boxed dossier cards */
+  .entry{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 30px;margin-bottom:18px;display:grid;grid-template-columns:110px 1fr;gap:26px;
+    box-shadow:0 1px 0 rgba(0,0,0,.2);
+  }
+  .entry:last-child{margin-bottom:0;}
+  .entry-code{
+    font-size:11px;color:var(--brass);letter-spacing:.04em;padding-top:4px;
+    border-right:1px solid var(--line);
+  }
+  .entry-title{font-family:var(--serif);font-size:19px;color:#fff;font-weight:600;margin:0 0 10px;}
+  .entry-body{color:var(--text-muted);font-size:14.5px;max-width:60ch;margin:0 0 14px;}
+  .entry-tags{display:flex;gap:8px;flex-wrap:wrap;}
+  .entry-tags span{
+    font-size:12px;color:var(--brass);background:var(--panel-2);
+    border:1px solid var(--line);padding:4px 10px;border-radius:4px;
+  }
+
+  footer{padding:70px 0 80px;text-align:center;}
+  .foot-title{font-family:var(--serif);font-style:italic;font-size:32px;color:#fff;margin:0 0 14px;}
+  footer p{color:var(--text-muted);max-width:44ch;margin:0 auto 28px;}
+  .foot-mail{color:var(--brass);font-size:16px;text-decoration:none;border-bottom:1px solid var(--brass-dim);padding-bottom:2px;}
+
+  @media (max-width:640px){
+    .ledger{grid-template-columns:1fr;}
+    .entry{grid-template-columns:1fr;}
+    .entry-code{border-right:none;border-bottom:1px solid var(--line);padding-bottom:10px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="file-no">EXPEDIENTE · IVÁN</div>
+    <nav><ul>
+      <li><a href="#areas">Áreas</a></li>
+      <li><a href="#trayectoria">Trayectoria</a></li>
+      <li><a href="#casos">Casos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="stamp">EN FORMACIÓN ACTIVA</span>
+    <h1 class="name">Iván</h1>
+    <p class="role">Consultor IT junior especializado en <b>ciberseguridad, bastionado de sistemas y cumplimiento normativo</b>. Formación de máster en curso, con base sólida en administración de sistemas.</p>
+    <div class="divider"></div>
+    <div class="meta-line">
+      <div class="item"><span>Ubicación</span><b>Madrid, España</b></div>
+      <div class="item"><span>Formación actual</span><b>Máster en Ciberseguridad, UFV</b></div>
+      <div class="item"><span>Base técnica</span><b>Grado Superior en ASIR</b></div>
+    </div>
+    <div class="cta-row">
+      <a href="#contacto" class="btn primary">Solicitar contacto</a>
+      <a href="#casos" class="btn ghost">Ver casos de estudio</a>
+    </div>
+  </div>
+</section>
+
+<section id="areas">
+  <div class="wrap">
+    <div class="tab">ÁREAS DE COMPETENCIA</div>
+    <h2>Materias del expediente</h2>
+    <div class="ledger">
+      <div class="ledger-row">
+        <dt>Cumplimiento</dt>
+        <dd>
+          <span class="tagitem">ENS (RD 311/2022)</span>
+          <span class="tagitem">RGPD</span>
+          <span class="tagitem">ISO/IEC 27001</span>
+          <span class="tagitem">CCN-STIC-817</span>
+        </dd>
+      </div>
+      <div class="ledger-row">
+        <dt>Ofensiva / Forense</dt>
+        <dd>
+          <span class="tagitem">Ethical Hacking</span>
+          <span class="tagitem">Escalado de privilegios (CTF)</span>
+          <span class="tagitem">Análisis forense digital</span>
+          <span class="tagitem">Respuesta a incidentes</span>
+        </dd>
+      </div>
+      <div class="ledger-row">
+        <dt>Infraestructura</dt>
+        <dd>
+          <span class="tagitem">Bastionado Linux</span>
+          <span class="tagitem">WireGuard</span>
+          <span class="tagitem">Docker</span>
+          <span class="tagitem">Fail2ban / nginx</span>
+        </dd>
+      </div>
+      <div class="ledger-row">
+        <dt>IA aplicada</dt>
+        <dd>
+          <span class="tagitem">Ollama</span>
+          <span class="tagitem">AnythingLLM</span>
+          <span class="tagitem">RAG sobre MITRE ATT&amp;CK / NIST / OWASP</span>
+        </dd>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trayectoria">
+  <div class="wrap">
+    <div class="tab">HISTORIAL</div>
+    <h2>Trayectoria</h2>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-title">Especialización en Ciberseguridad (Máster)</div>
+        <div class="case-date">Oct. 2025 — actual</div>
+      </div>
+      <div class="case-org">Universidad Francisco de Vitoria, Madrid</div>
+      <div class="case-desc">Bastionado de redes y sistemas, incidentes de seguridad, hacking ético y marco ENS/RGPD/ISO 27001.</div>
+    </div>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-title">Grado Superior en ASIR</div>
+        <div class="case-date">Titulado</div>
+      </div>
+      <div class="case-org">Universidad Francisco de Vitoria</div>
+      <div class="case-desc">Administración de Sistemas Informáticos en Red.</div>
+    </div>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-title">Puesto técnico</div>
+        <div class="case-date">Experiencia previa</div>
+      </div>
+      <div class="case-org">Unisys S.L.</div>
+      <div class="case-desc">Soporte y operaciones en entorno corporativo.</div>
+    </div>
+  </div>
+</section>
+
+<section id="casos">
+  <div class="wrap">
+    <div class="tab">CASOS DE ESTUDIO</div>
+    <h2>Trabajo documentado</h2>
+    <div class="entry">
+      <div class="entry-code">CASO<br>N.º 01</div>
+      <div>
+        <div class="entry-title">Laboratorio local de IA para ciberseguridad</div>
+        <p class="entry-body">Infraestructura propia sobre Ubuntu Server con Ollama y AnythingLLM en Docker, alimentada con RAG de MITRE ATT&CK, NIST CSF y OWASP Top 10. Acceso remoto vía Tailscale, proxy nginx con HTTPS.</p>
+        <div class="entry-tags"><span>Ollama</span><span>Docker</span><span>Tailscale</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-code">CASO<br>N.º 02</div>
+      <div>
+        <div class="entry-title">Informe de respuesta a incidentes</div>
+        <p class="entry-body">Documentación completa de un escenario de fuerza bruta SSH (INC-2024-0047), estructurada en nueve secciones con referencias ENS y CCN-STIC-817.</p>
+        <div class="entry-tags"><span>ENS</span><span>DFIR</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-code">CASO<br>N.º 03</div>
+      <div>
+        <div class="entry-title">Despliegue de VPN con WireGuard</div>
+        <p class="entry-body">Servidor WireGuard sobre VPS Ubuntu (IONOS) y cliente Windows en modo túnel completo, documentado como informe técnico profesional.</p>
+        <div class="entry-tags"><span>WireGuard</span><span>IONOS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-title">Cierre de expediente</div>
+    <p>Abierto a prácticas y colaboraciones en consultoría IT y ciberseguridad.</p>
+    <a class="foot-mail" href="mailto:tuemail@dominio.com">tuemail@dominio.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
